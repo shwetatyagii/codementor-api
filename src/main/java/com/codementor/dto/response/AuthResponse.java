@@ -1,0 +1,18 @@
+package com.codementor.dto.response;
+
+import lombok.Builder;
+import lombok.Getter;
+
+@Getter
+@Builder
+public class AuthResponse {
+
+    private String token;
+    private String tokenType;
+    private Long expiresIn;
+    private Long userId;
+    private String username;
+    private String email;
+    private String fullName;
+    private String role;
+}
