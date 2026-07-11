@@ -70,6 +70,17 @@ public class GlobalExceptionHandler {
                 .body(ApiResponse.error("Invalid email or password", "INVALID_CREDENTIALS"));
     }
 
+    @ExceptionHandler(AiServiceException.class)
+    public ResponseEntity<ApiResponse<Void>> handleAiServiceException(
+            AiServiceException ex) {
+
+        log.error("AI service error: {}", ex.getMessage());
+
+        return ResponseEntity
+                .status(HttpStatus.SERVICE_UNAVAILABLE)
+                .body(ApiResponse.error(ex.getMessage(), "AI_SERVICE_ERROR"));
+    }
+
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseEntity<ApiResponse<Void>> handleUsernameNotFound(
             UsernameNotFoundException ex) {
