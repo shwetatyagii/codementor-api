@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -25,8 +26,8 @@ public class SecurityConfig {
 
     private final UserDetailsServiceImpl userDetailsService;
     private final JwtFilter jwtFilter;
+    private final CorsConfigurationSource corsConfigurationSource;
 
-    // Public endpoints — no JWT needed
     private static final String[] PUBLIC_URLS = {
             "/api/auth/**",
             "/api/health",
@@ -39,27 +40,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // Disable CSRF — not needed for stateless JWT APIs
                 .csrf(AbstractHttpConfigurer::disable)
-
-                // Allow CORS — will configure properly when frontend is added
-                .cors(AbstractHttpConfigurer::disable)
-
-                // Route authorization rules
+                .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(PUBLIC_URLS).permitAll()
                         .anyRequest().authenticated()
                 )
-
-                // Stateless session — no server-side sessions
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-
-                // Register our auth provider
                 .authenticationProvider(authenticationProvider())
-
-                // Add JWT filter BEFORE Spring's default username/password filter
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
