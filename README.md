@@ -114,3 +114,10 @@ optimization_tips, best_practices,
 alternative_approach, common_mistakes,
 interview_questions, raw_ai_response)
 
+## Backend Repository
+
+https://github.com/shwetatyagii/codementor-api
+
+## Frontend Repository
+
+https://github.com/shwetatyagii/codementor-ui
