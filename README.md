@@ -2,6 +2,13 @@
 
 An AI-powered Java code evaluation and interview preparation system built with Spring Boot.
 
+## 🚀 Live Demo
+- **Frontend:** https://codementor-ui.vercel.app
+- **API Docs (Swagger):** https://codementor-api-oy2m.onrender.com/swagger-ui/index.html
+- **Health Check:** https://codementor-api-oy2m.onrender.com/api/health
+
+> ⚠️ First load may take 30-60 seconds (free tier cold start)
+
 ## What It Does
 
 Submit Java code → Get detailed AI analysis including:
@@ -19,9 +26,15 @@ Submit Java code → Get detailed AI analysis including:
 - Java 17 + Spring Boot 3.2.5
 - Spring Security + JWT Authentication
 - Spring Data JPA + Hibernate
-- MySQL 8
+- MySQL (FreeSQLDatabase)
 - Groq AI API (Llama 3.3 70B)
 - Swagger / OpenAPI 3
+- Docker (Render deployment)
+
+**Deployment**
+- Backend: Render (Docker)
+- Frontend: Vercel
+- Database: FreeSQLDatabase (MySQL)
 
 ## Project Architecture
 Controller Layer  →  validates input, delegates to service
@@ -59,7 +72,7 @@ AI Layer          →  AiService interface → GeminiAiService (Groq)
 | PUT | /api/users/profile | Update full name |
 | GET | /api/users/dashboard | Dashboard summary |
 
-## Setup Instructions
+## Local Setup
 
 ### Prerequisites
 - Java 17+
@@ -101,7 +114,7 @@ mvn spring-boot:run
 - Passwords hashed with BCrypt
 - JWT tokens (24hr expiry)
 - All analysis/history endpoints require valid JWT
-- API keys stored in application.properties (not committed to Git)
+- API keys stored in environment variables (not committed to Git)
 
 ## Database Schema
 users (id, username, email, password, full_name, role, created_at)
@@ -114,10 +127,6 @@ optimization_tips, best_practices,
 alternative_approach, common_mistakes,
 interview_questions, raw_ai_response)
 
-## Backend Repository
-
-https://github.com/shwetatyagii/codementor-api
-
-## Frontend Repository
-
-https://github.com/shwetatyagii/codementor-ui
+## Repositories
+- **Backend:** https://github.com/shwetatyagii/codementor-api
+- **Frontend:** https://github.com/shwetatyagii/codementor-ui
